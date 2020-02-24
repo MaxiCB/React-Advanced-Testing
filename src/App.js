@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Dropdown from "react-dropdown";
 import parse from "html-react-parser";
-
+// API Calls && Utiil functions
 import {fetchShow} from './api/fetchShow';
-import { formatSeasons } from "./utils/formatSeasons";
-
+import {formatSeasons} from "./utils/formatSeasons";
+// Components
 import Episodes from "./components/Episodes";
-import "./styles.css";
 
-export default function App() {
+const App = () => {
   const [show, setShow] = useState(null);
   const [seasons, setSeasons] = useState([]);
   const [selectedSeason, setSelectedSeason] = useState("");
@@ -18,6 +17,7 @@ export default function App() {
     fetchShow()
       .then(res => {
         setShow(res.data);
+        console.log(res.data)
         setSeasons(formatSeasons(res.data._embedded.episodes));
       });
   }, []);
@@ -27,11 +27,11 @@ export default function App() {
   };
 
   if (!show) {
-    return <h2>Fetching data...</h2>;
+    return <h2 data-testid={'loading'}>Fetching data...</h2>;
   }
 
   return (
-    <div className="App">
+    <div className="App" data-testid={'loaded'}>
       <img className="poster-img" src={show.image.original} alt={show.name} />
       <h1>{show.name}</h1>
       {parse(show.summary)}
@@ -45,3 +45,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App

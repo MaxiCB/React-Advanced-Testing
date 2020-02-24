@@ -1,7 +1,7 @@
 import React from 'react';
 import parse from 'html-react-parser';
 
-export default function Episodes(props) {
+const Episodes = (props) => {
   return (
     <div className="episodes">
       {props.episodes.map(e => (
@@ -23,3 +23,5 @@ export default function Episodes(props) {
     </div>
   );
 }
+
+export default Episodes
