@@ -11,15 +11,18 @@ const App = () => {
   const [show, setShow] = useState(null);
   const [seasons, setSeasons] = useState([]);
   const [selectedSeason, setSelectedSeason] = useState("");
+  const [error, setError] = useState(null)
   const episodes = seasons[selectedSeason] || [];
 
   useEffect(() => {
     fetchShow()
       .then(res => {
         setShow(res.data);
-        console.log(res.data)
         setSeasons(formatSeasons(res.data._embedded.episodes));
-      });
+      })
+      .catch(err => {
+        setError(err)
+      })
   }, []);
 
   const handleSelect = e => {
